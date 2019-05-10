@@ -41,7 +41,7 @@ npm run server
 If getting a d
 
 
-##License
+### License
 refer to the license here
 [License](https://github.com/juicy-fec/related-artists-client/blob/master/LICENSE.md)
 
