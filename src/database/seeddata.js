@@ -7,7 +7,7 @@ require('babel-polyfill');
 
 const { Schema } = mongoose;
 
-const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
+const mongoURI = process.env.DB_URI || 'mongodb://localhost/relatedartists';
 const db = mongoose.connect(mongoURI);
 
 const artistSchema = new Schema({
@@ -47,6 +47,7 @@ const seeddata = () => {
   Promise.all(imageurls).then((images) => {
     const dbpromises = [];
     images.forEach((image, index) => {
+      console.log(image);
       dbpromises.push(Artist.create({
         _id: `${index}`, name: `${index}`, bio: `bio of ${index}`, image, relatedartists: [(index + 1) % 100, (index + 20) % 100],
       }));
