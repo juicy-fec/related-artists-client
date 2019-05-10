@@ -4,7 +4,8 @@ The application is intendted to be a clone of the UI of spotify.
 The specific component is the related artists that renders a list
 of related artists. The app is a microservice of the whole page which
 is shown here.
- ![Spotifly Page](https://github.com/juicy-fec/related-artists-client/blob/master/FECdemo.png)
+
+![Spotifly Page](https://github.com/juicy-fec/related-artists-client/blob/master/FECdemo.png)
 
 > Project description
 
@@ -13,9 +14,18 @@ is shown here.
   - https://github.com/juicy-fec/related-artists-proxy
 
 ## Table of Contents
+1. [Technologies](#Technologies)
 1. [Requirements](#Requirements)
 1. [Installing](#Installing)
 1. [License](#License)
+
+### Technologies
+- React
+- TravisCI
+- Express
+- Docker
+- AWS
+- Styled Components
 
 ### Requirements
 - node 10.15.3
