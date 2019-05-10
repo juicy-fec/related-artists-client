@@ -15,7 +15,7 @@ is shown here.
 ## Table of Contents
 1. [Requirements](#Requirements)
 1. [Installing](#Installing)
-1. [License] (#License)
+1. [License](#License)
 
 ### Requirements
 node 10.15.3
@@ -24,21 +24,15 @@ docker-compose 3
 ### Installing
 
 using docker-compose
+From the root folder of the project
 ```sh
 docker-compose up
 ```
-
-
-If testing on locally
-From within the root directory:
-
+then when the docker-compose finishes, use the link in browser
 ```sh
-npm install -g webpack
-npm install
-npm run client
-npm run server
+http://localhost:3100/#related
 ```
-If getting a d
+
 
 
 ### License
