@@ -18,8 +18,8 @@ is shown here.
 1. [License](#License)
 
 ### Requirements
-node 10.15.3
-docker-compose 3
+- node 10.15.3
+- docker-compose 3
 
 ### Installing
 
@@ -34,8 +34,6 @@ http://localhost:3100/#related
 ```
 
 
-
 ### License
-refer to the license here
-[License](https://github.com/juicy-fec/related-artists-client/blob/master/LICENSE.md)
+refer to the [License](https://github.com/juicy-fec/related-artists-client/blob/master/LICENSE.md)
 
