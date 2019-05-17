@@ -7,8 +7,6 @@ is shown here.
 
 ![Spotifly Page](https://github.com/juicy-fec/related-artists-client/blob/master/FECdemo.png)
 
-> Project description
-
 ## Related Projects
 
   - https://github.com/juicy-fec/related-artists-proxy
