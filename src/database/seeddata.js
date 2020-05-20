@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
+// const Promise = require('bluebird');
 mongoose.Promise = require('bluebird');
 
 require('babel-polyfill');
 
 
 const { Schema } = mongoose;
-
-const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
-const db = mongoose.connect(mongoURI);
+const mongoURI = 'mongodb://localhost/relatedartists';
+// const db = mongoose.connect(mongoURI, { useNewUrlParser: true });
+const db = mongoose.connect(mongoURI, { useMongoClient: true });
+// const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
 
 const artistSchema = new Schema({
   _id: String,
@@ -39,7 +41,7 @@ const seeddata = () => {
   }
   const imageurls = [];
   let count = 0;
-  const entries = 100;
+  const entries = 1000;
   while (count < entries) {
     imageurls.push(fetchImage());
     count += 1;
@@ -54,7 +56,7 @@ const seeddata = () => {
     });
     Promise.all(dbpromises).then(() => {
       console.log('done seeding');
-      db.connection.close();
+      //db.connection.close();
     });
   }).catch((err) => {
     console.log(err);

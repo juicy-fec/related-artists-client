@@ -1,6 +1,0 @@
-language: node_js
-services: mongodb
-before_script: npm server
-before_script: npm client
-before_script: npm run seeddata
-script: npm test

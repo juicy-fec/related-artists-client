@@ -4,8 +4,11 @@ mongoose.Promise = require('bluebird');
 
 
 const { Schema } = mongoose;
-const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
-const db = mongoose.connect(mongoURI);
+const mongoURI = 'mongodb://localhost/relatedartists';
+// const db = mongoose.connect(mongoURI, { useNewUrlParser: true });
+const db = mongoose.connect(mongoURI, { useMongoClient: true });
+// const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
+// const db = mongoose.connect(mongoURI);
 
 const artistSchema = new Schema({
   _id: String,
