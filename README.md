@@ -40,7 +40,8 @@ then when the docker-compose finishes, use the link in browser
 ```sh
 http://localhost:3100/#related
 ```
-
+seedmongo:
+mongoimport -d artistsdb -c artists --type csv --file artists.csv --headerline
 
 ### License
 refer to the [License](https://github.com/juicy-fec/related-artists-client/blob/master/LICENSE.md)
