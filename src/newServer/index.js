@@ -11,20 +11,20 @@ app.use(cors());
 app.use(express.json());
 
 // get request for artists
-app.get('/artists', (req, res) => res.send('Hello World!'));
+app.get('/rel-artists', (req, res) => res.send('Hello World!'));
 
 // post
-app.post('/', (req, res) => {
-    res.send('Got a POST request');
+app.post('/rel-artists', (req, res) => {
+  res.send('Got a POST request');
 });
 
 // Put request
-app.put('/user', (req, res) => {
-    res.send('Got a PUT request at /user');
+app.put('/rel-artists', (req, res) => {
+  res.send('Got a PUT request at /user');
 });
 // Delete request
-app.delete('/user', (req, res) => {
-    res.send('Got a DELETE request at /user');
+app.delete('/rel-artists', (req, res) => {
+  res.send('Got a DELETE request at /user');
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
