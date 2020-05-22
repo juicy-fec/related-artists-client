@@ -8,7 +8,7 @@ const artistsdbSchema = mongoose.Schema({
   name: String,
   bio: String,
   image: String,
-  artist_id: Number,
+  artistiId: Number,
 });
 
 // create model for reviews
@@ -29,28 +29,31 @@ const getArtists = (id) => {
   return new Promise((resolve, reject) => {
     // const query = artists.where({ _id: id });
     const query1 = {
-      artist_id: id,
+      artistId: id,
     };
     artists.findOne(query1, (err, data) => {
       if (err) {
         reject(err);
       } else {
-        console.log('data in server: ', data);
         resolve(data);
       }
     });
   });
 };
 
-const testFunc = () => {
-  artists.findOne({
-    artist_id: 1,
-  })
-    .then((data) => console.log('data from func ', data)) // user can be undefined
+const dbLogger = () => {
+  artists.findOne({ artistId: 3000 }).explain('executionStats')
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+};
+
+const testFunc = (id) => {
+  return artists.findOne({ artistId: parseInt(id) })
+    .then((data) => data)
     .catch((err) => console.log(err));
 };
 
 // Export function to create "reviews" model class
 module.exports = {
-  artists, getAllArtists, artistsdbSchema, getArtists, testFunc,
+  artists, getAllArtists, artistsdbSchema, getArtists, testFunc, dbLogger,
 };

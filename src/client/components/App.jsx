@@ -68,9 +68,10 @@ class App extends React.Component {
   fetchArtistData() {
     // need to find an initial artist.
     fetch(`/data/artist?id=${this.state.artistid}`).then((response) => {
-      console.log('response in app:', response);
+      //console.log('response in app:', response);
       return response.json();
     }).then((data) => {
+      console.log('data ', data);
       let param = {};
       if (data !== null) {
         param = data;
