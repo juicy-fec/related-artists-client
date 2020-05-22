@@ -21,12 +21,12 @@ app.get('/artists', (req, res) => {
   });
 });
 
-app.get('/data/artist/', (req, res) => {
-  const userid = req.query.id;
-  db.getArtist(userid).then((data) => {
-    res.json(data);
-  });
-});
+// app.get('/data/artist/', (req, res) => {
+//   const userid = req.query.id;
+//   db.getArtist(userid).then((data) => {
+//     res.json(data);
+//   });
+// });
 
 app.get('/icon', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/playicon.png'));

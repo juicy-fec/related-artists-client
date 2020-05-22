@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const db = require('../connection.js');
+const Promise = require('bluebird');
+const mongoDb = require('../connection.js');
 
 
-const artistsSchema = mongoose.Schema({
+const artistsdbSchema = mongoose.Schema({
   _id: String,
   name: String,
   bio: String,
@@ -11,10 +12,10 @@ const artistsSchema = mongoose.Schema({
 });
 
 // create model for reviews
-const Artist = mongoose.model('Artist', artistsSchema);
+const artists = mongoose.model('artists', artistsdbSchema, 'artists');
 
-const findDocuments = (callback, obj) => {
-  Artist.find(obj, (err, docs) => {
+const getAllArtists = (callback, obj) => {
+  artists.find(obj, (err, docs) => {
     if (err) {
       console.log('Error: ', err);
     } else {
@@ -24,5 +25,32 @@ const findDocuments = (callback, obj) => {
   });
 };
 
+const getArtists = (id) => {
+  return new Promise((resolve, reject) => {
+    // const query = artists.where({ _id: id });
+    const query1 = {
+      artist_id: id,
+    };
+    artists.findOne(query1, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log('data in server: ', data);
+        resolve(data);
+      }
+    });
+  });
+};
+
+const testFunc = () => {
+  artists.findOne({
+    artist_id: 1,
+  })
+    .then((data) => console.log('data from func ', data)) // user can be undefined
+    .catch((err) => console.log(err));
+};
+
 // Export function to create "reviews" model class
-module.exports = { Artist, findDocuments, artistsSchema };
+module.exports = {
+  artists, getAllArtists, artistsdbSchema, getArtists, testFunc,
+};
