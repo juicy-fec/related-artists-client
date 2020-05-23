@@ -2,12 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
-const { seedMongo } = require('../newDatabase1/models/seedMongo.js');
+
 
 // import database connection
 const mongoDb = require('../newDatabase1/connection.js');
 
-const { getRelArtists, getArtist, testFunc, dbLogger } = require('../newDatabase1/models/artists');
+const { seedMongo, getArtist, testFunc, dbLogger } = require('../newDatabase1/models/artists');
 
 const app = express();
 const PORT = process.env.PORT || 3030;
@@ -17,21 +17,25 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
-// get request for artists
+// get request for  related artists group return array of artists
 app.get('/data/rel-artists/', (req, res) => {
-  console.log(req);
+  seedMongo(1)
+  // res.send('got data: ');
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
 });
 
 
 // get request for one artist
 app.get('/data/artist/', (req, res) => {
-  seedMongo(req.query.id)
-    .then((data) => res.json(data))
-    .catch((error) => res.json(error));
-
   // getArtist(req.query.id)
   //   .then((data) => res.json(data))
   //   .catch((error) => res.json(error));
+
+  seedMongo(req.query.id)
+  // res.send('got data: ');
+    .then((data) => res.send(data))
+    .catch((error) => res.json(error));
 
   // const userid = req.query.id;
   // getArtists(userid).then((data) => {

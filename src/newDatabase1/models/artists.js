@@ -9,24 +9,18 @@ const artistsdbSchema = mongoose.Schema({
   bio: String,
   image: String,
   artistId: Number,
-  relatedArtist: Array,
+  relatedArtists: Array,
 });
 
 // create model for reviews
 const artists = mongoose.model('artists', artistsdbSchema, 'artists');
 
-const getRelArtists = (callback, obj) => {
-  artists.find(obj, (err, docs) => {
-    if (err) {
-      console.log('Error: ', err);
-    } else {
-      console.log('document: ');
-      callback(null, docs);
-    }
-  }).limit(8);
+//gets numbers of artists
+const getSomeArtists = (num) => {
+  return artists.find({}).limit(num);
 };
 
-
+//tests database call from server
 const dbLogger = () => {
   artists.findOne({ artistId: 3000 }).explain('executionStats')
     .then((data) => console.log(data))
@@ -39,7 +33,30 @@ const getArtist = (id) => {
     .catch((err) => console.log(err));
 };
 
+// seeds doc with array of docs and return array of docs to server 
+const seedMongo = (id) => {
+  // create random number between 3 - 34
+  const random = Math.floor(Math.random() * Math.floor(30)) + 4;
+  // grabs single doc based on id from db
+  // const document = artists.findOne({ artistId: id });
+  // grabs group of artists from db based on random number
+  const someArtists = getSomeArtists(random);
+  // run save on document updating related artists
+  return Promise.all([document, someArtists])
+    .then(([artistArr]) => {
+      const newdoc = artists.findOneAndUpdate(
+        { artistId: id },
+        { relatedArtists: artistArr },
+        // If `new` isn't true, `findOneAndUpdate()` will return the
+        // document as it was _before_ it was updated.
+        { new: true },
+      );
+      // console.log('artists ', artistArr);
+      return newdoc;
+    });
+};
+
 // Export function to create "reviews" model class
 module.exports = {
-  artists, getRelArtists, artistsdbSchema, getArtist, dbLogger,
+  artists, artistsdbSchema, getArtist, dbLogger, seedMongo,
 };

@@ -1,13 +1,14 @@
 const fs = require('fs');
 const faker = require('faker');
 // const { Aritst, artistSchema } = require('../models/artists.js');
+const writeRelArtists = fs.createWriteStream('rel-artists.csv');
+writeRelArtists.write('artistId,relatedId\n', 'utf8');
 
+const writeArtists = fs.createWriteStream('new-artists.csv');
+writeArtists.write('artistId,artistName,avatar,bio\n', 'utf8');
 
-const writeArtists = fs.createWriteStream('artists.csv');
-writeArtists.write('artistId,artistName,avatar,bio,related\n', 'utf8');
-
-function writeUsers(writer, encoding, callback) {
-  let i = 10000000;
+function writeUsers(artiststream, relatedstream, encoding, callback) {
+  let i = 100;
   let id = 0;
   function write() {
     let ok = true;
@@ -17,25 +18,33 @@ function writeUsers(writer, encoding, callback) {
       const artistName = faker.internet.userName();
       const avatar = faker.image.avatar();
       const bio = 'Artist';
-      const related = [];
-      const data = `${id},${artistName},${avatar},${bio},${related}\n`;
+      const data = `${id},${artistName},${avatar},${bio}\n`;
       if (i === 0) {
-        writer.write(data, encoding, callback);
+        artiststream.write(data, encoding, callback);
       } else {
         // see if we should continue, or wait
         // don't pass the callback, because we're not done yet.
-        ok = writer.write(data, encoding);
+        ok = artiststream.write(data, encoding);
+      }
+      const random = Math.ceil(Math.random() * 30);
+      for (let j = 0; j < random; j += 1) {
+        const artistsId = id;
+        const relatedId = Math.ceil(Math.random() * 10000000);
+        const otherData = `${artistsId},${relatedId}\n`;
+        relatedstream.write(otherData, encoding, callback);
       }
     } while (i > 0 && ok);
     if (i > 0) {
       // had to stop early!
       // write some more once it drains
-      writer.once('drain', write);
+      relatedstream.once('drain', write);
+      artiststream.once('drain', write);
     }
   }
   write();
 }
 
-writeUsers(writeArtists, 'utf-8', () => {
+writeUsers(writeArtists, writeRelArtists, 'utf-8', () => {
   writeArtists.end();
+  writeRelArtists.end();
 });
