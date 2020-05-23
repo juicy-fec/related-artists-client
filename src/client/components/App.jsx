@@ -42,7 +42,6 @@ class App extends React.Component {
     this.fetchArtistData();
     window.addEventListener('resize', this.updatewindow);
     document.addEventListener('contextmenu', this.handlerightclick);
-
     const context = this;
     window.onhashchange = () => {
       context.forceUpdate();
@@ -68,10 +67,9 @@ class App extends React.Component {
   fetchArtistData() {
     // need to find an initial artist.
     fetch(`/data/artist?id=${this.state.artistid}`).then((response) => {
-      //console.log('response in app:', response);
       return response.json();
     }).then((data) => {
-      console.log('data ', data);
+      console.log(data);
       let param = {};
       if (data !== null) {
         param = data;
