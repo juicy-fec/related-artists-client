@@ -5,7 +5,6 @@ import Artist from './Artist.jsx';
 
 const getRelatedArtist = (id) => {
   return fetch(`/data/artist?id=${id}`).then((response) => {
-    //console.log('i ran in list');
     return response.json();
   });
 };
@@ -22,16 +21,19 @@ class ArtistList extends React.Component {
 
 
   componentDidMount() {
-    console.log('i ran in list mount');
-    const newstate = [];
+    // const newstate = [];
 
-    this.props.artist.relatedartists.forEach((relatedartist) => {
-      getRelatedArtist(relatedartist).then((artistdata) => {
-        const component = artistdata;
-        newstate.push(component);
-        this.setState({ artists: newstate });
-      });
-    });
+    getRelatedArtist(1)
+      .then((data) => this.setState({ artists: data.relatedArtists }))
+      .catch((err) => console.log(err));
+
+    // this.props.artist.relatedArtists.forEach((relatedartist) => {
+    //   getRelatedArtist(relatedartist).then((artistdata) => {
+    //     const component = artistdata;
+    //     newstate.push(component);
+    //     this.setState({ artists: newstate });
+    //   });
+    // });
   }
 
   updatesize() {

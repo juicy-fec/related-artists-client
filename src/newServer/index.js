@@ -19,7 +19,7 @@ app.use(express.json());
 
 // get request for  related artists group return array of artists
 app.get('/data/rel-artists/', (req, res) => {
-  seedMongo(1)
+  seedMongo(req.query.id)
   // res.send('got data: ');
     .then((data) => res.json(data))
     .catch((error) => res.json(error));
@@ -28,19 +28,20 @@ app.get('/data/rel-artists/', (req, res) => {
 
 // get request for one artist
 app.get('/data/artist/', (req, res) => {
-  // getArtist(req.query.id)
-  //   .then((data) => res.json(data))
-  //   .catch((error) => res.json(error));
+  dbLogger();
 
-  seedMongo(req.query.id)
-  // res.send('got data: ');
-    .then((data) => res.send(data))
+  getArtist(req.query.id)
+    .then((data) => res.json(data))
     .catch((error) => res.json(error));
 
   // const userid = req.query.id;
   // getArtists(userid).then((data) => {
   // res.json(data);
   // });
+});
+
+app.get('/icon', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/playicon.png'));
 });
 
 // post

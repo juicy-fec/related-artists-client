@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
-const fetch = require('node-fetch');
-// const Promise = require('bluebird');
-mongoose.Promise = require('bluebird');
+// const mongoose = require('mongoose');
+// const fetch = require('node-fetch');
+// // const Promise = require('bluebird');
+// mongoose.Promise = require('bluebird');
 
-require('babel-polyfill');
+// require('babel-polyfill');
 
 
-const { Schema } = mongoose;
-const mongoURI = 'mongodb://localhost/relatedartists';
-// const db = mongoose.connect(mongoURI, { useNewUrlParser: true });
-const db = mongoose.connect(mongoURI, { useMongoClient: true });
+// const { Schema } = mongoose;
+// const mongoURI = 'mongodb://localhost/relatedartists';
+// // const db = mongoose.connect(mongoURI, { useNewUrlParser: true });
+// const db = mongoose.connect(mongoURI, { useMongoClient: true });
 // const mongoURI = process.env.DB_URI || 'mongodb://database/relatedartists';
 
 const artistSchema = new Schema({
@@ -56,7 +56,7 @@ const seeddata = () => {
     });
     Promise.all(dbpromises).then(() => {
       console.log('done seeding');
-      //db.connection.close();
+      db.connection.close();
     });
   }).catch((err) => {
     console.log(err);

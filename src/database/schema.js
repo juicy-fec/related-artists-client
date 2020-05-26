@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const fetch = require('node-fetch');
-mongoose.Promise = require('bluebird');
+// const mongoose = require('mongoose');
+// const fetch = require('node-fetch');
+// mongoose.Promise = require('bluebird');
 
 
 const { Schema } = mongoose;
@@ -53,6 +53,6 @@ const getArtist = (id) => {
 };
 
 // seeddata();
-module.exports = {
-  fetchImage, getdata, getArtist, db,
-};
+// module.exports = {
+//   fetchImage, getdata, getArtist, db,
+// };

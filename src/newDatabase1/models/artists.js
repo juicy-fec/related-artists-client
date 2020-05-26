@@ -23,7 +23,7 @@ const getSomeArtists = (num) => {
 //tests database call from server
 const dbLogger = () => {
   artists.findOne({ artistId: 3000 }).explain('executionStats')
-    .then((data) => console.log(data))
+    .then((data) => console.log('dblogger: ', data))
     .catch((err) => console.log(err));
 };
 
@@ -42,7 +42,7 @@ const seedMongo = (id) => {
   // grabs group of artists from db based on random number
   const someArtists = getSomeArtists(random);
   // run save on document updating related artists
-  return Promise.all([document, someArtists])
+  return Promise.all([someArtists])
     .then(([artistArr]) => {
       const newdoc = artists.findOneAndUpdate(
         { artistId: id },
