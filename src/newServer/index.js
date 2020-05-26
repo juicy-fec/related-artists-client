@@ -31,7 +31,7 @@ app.get('/data/artist/', (req, res) => {
   dbLogger();
 
   getArtist(req.query.id)
-    .then((data) => res.json(data))
+    .then((data) => console.log(data))
     .catch((error) => res.json(error));
 
   // const userid = req.query.id;
