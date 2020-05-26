@@ -3,16 +3,46 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 
+
+// import database connection
+const mongoDb = require('../newDatabase1/connection.js');
+
+const { seedMongo, getArtist, testFunc, dbLogger } = require('../newDatabase1/models/artists');
+
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3030;
 
 app.use(express.static(path.join(__dirname, '/../../public')));
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
-// get request for artists
-app.get('/rel-artists', (req, res) => res.send('Hello World!'));
+// get request for  related artists group return array of artists
+app.get('/data/rel-artists/', (req, res) => {
+  seedMongo(req.query.id)
+  // res.send('got data: ');
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
+});
+
+
+// get request for one artist
+app.get('/data/artist/', (req, res) => {
+  dbLogger();
+
+  getArtist(req.query.id)
+    .then((data) => console.log(data))
+    .catch((error) => res.json(error));
+
+  // const userid = req.query.id;
+  // getArtists(userid).then((data) => {
+  // res.json(data);
+  // });
+});
+
+app.get('/icon', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/playicon.png'));
+});
 
 // post
 app.post('/rel-artists', (req, res) => {
@@ -28,4 +58,4 @@ app.delete('/rel-artists', (req, res) => {
   res.send('Got a DELETE request at /user');
 });
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`));

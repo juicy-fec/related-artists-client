@@ -4,10 +4,10 @@ const faker = require('faker');
 
 
 const writeArtists = fs.createWriteStream('artists.csv');
-writeArtists.write('artistId,artistName,avatar,bio\n', 'utf8');
+writeArtists.write('artistId,artistName,avatar,bio,related\n', 'utf8');
 
 function writeUsers(writer, encoding, callback) {
-  let i = 50000000;
+  let i = 10000000;
   let id = 0;
   function write() {
     let ok = true;
@@ -17,7 +17,8 @@ function writeUsers(writer, encoding, callback) {
       const artistName = faker.internet.userName();
       const avatar = faker.image.avatar();
       const bio = 'Artist';
-      const data = `${id},${artistName},${avatar},${bio}\n`;
+      const related = [];
+      const data = `${id},${artistName},${avatar},${bio},${related}\n`;
       if (i === 0) {
         writer.write(data, encoding, callback);
       } else {

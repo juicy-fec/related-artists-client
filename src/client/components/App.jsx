@@ -42,7 +42,6 @@ class App extends React.Component {
     this.fetchArtistData();
     window.addEventListener('resize', this.updatewindow);
     document.addEventListener('contextmenu', this.handlerightclick);
-
     const context = this;
     window.onhashchange = () => {
       context.forceUpdate();
@@ -70,9 +69,10 @@ class App extends React.Component {
     fetch(`/data/artist?id=${this.state.artistid}`).then((response) => {
       return response.json();
     }).then((data) => {
+      // console.log(data.relatedArtists[0]);
       let param = {};
       if (data !== null) {
-        param = data;
+        param = data.relatedArtists[0];
       }
       this.setState({ artistinfo: param });
     });
