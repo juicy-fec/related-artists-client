@@ -7,7 +7,7 @@ const cors = require('cors');
 // import database connection
 const mongoDb = require('../newDatabase1/connection.js');
 
-const { seedMongo, getArtist, testFunc, dbLogger } = require('../newDatabase1/models/artists');
+const { seedMongo, getArtist, dbLogger } = require('../newDatabase1/models/artists');
 
 const app = express();
 const PORT = process.env.PORT || 3030;

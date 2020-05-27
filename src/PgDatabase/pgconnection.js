@@ -1,10 +1,12 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const connectionString = 'postgres://postgres:postgres@localhost:5432/database';
+const pool = new Pool({
+  database: 'rel-artists',
+});
 
-const client = new Client({ connectionString });
-
-client.connect();
+module.exports = {
+  query: (text, params, callback) => pool.query(text, params, callback),
+};
 
 CREATE TABLE Artists(
   id int not null,
