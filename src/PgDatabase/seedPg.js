@@ -1,50 +1,66 @@
-const fs = require('fs');
-const faker = require('faker');
-// const { Aritst, artistSchema } = require('../models/artists.js');
-const writeRelArtists = fs.createWriteStream('rel-artists.csv');
-writeRelArtists.write('artistId,relatedId\n', 'utf8');
+const path = require('path');
+const pgdb = require('./pgconnection.js');
 
-const writeArtists = fs.createWriteStream('new-artists.csv');
-writeArtists.write('artistId,artistName,avatar,bio\n', 'utf8');
+const createArtists = () => {
+  const sqlString = `CREATE TABLE Artists (
+    _id SERIAL PRIMARY KEY,
+    artistId INT NOT NULL,
+    artistName VARCHAR(80),
+    bio VARCHAR (10) NOT NULL,
+    avatar VARCHAR (100) NOT NULL
+   )`;
 
-function writeUsers(artiststream, relatedstream, encoding, callback) {
-  let i = 100;
-  let id = 0;
-  function write() {
-    let ok = true;
-    do {
-      i -= 1;
-      id += 1;
-      const artistName = faker.internet.userName();
-      const avatar = faker.image.avatar();
-      const bio = 'Artist';
-      const data = `${id},${artistName},${avatar},${bio}\n`;
-      if (i === 0) {
-        artiststream.write(data, encoding, callback);
-      } else {
-        // see if we should continue, or wait
-        // don't pass the callback, because we're not done yet.
-        ok = artiststream.write(data, encoding);
-      }
-      const random = Math.ceil(Math.random() * 30);
-      for (let j = 0; j < random; j += 1) {
-        const artistsId = id;
-        const relatedId = Math.ceil(Math.random() * 10000000);
-        const otherData = `${artistsId},${relatedId}\n`;
-        relatedstream.write(otherData, encoding, callback);
-      }
-    } while (i > 0 && ok);
-    if (i > 0) {
-      // had to stop early!
-      // write some more once it drains
-      relatedstream.once('drain', write);
-      artiststream.once('drain', write);
-    }
-  }
-  write();
-}
+  return pgdb.query('DROP TABLE IF EXISTS Artists')
+    .then(() => pgdb.query(sqlString));
+};
 
-writeUsers(writeArtists, writeRelArtists, 'utf-8', () => {
-  writeArtists.end();
-  writeRelArtists.end();
-});
+const createRelatedArtists = () => {
+  const sqlString = `CREATE TABLE relatedArtists(
+    relative_id SERIAL PRIMARY KEY,
+    artistId1 INT,
+    artistId2 INT
+    )`;
+
+  return pgdb.query('DROP TABLE IF EXISTS relatedArtists')
+    .then(() => pgdb.query(sqlString));
+};
+
+const seedPgDatabase1 = () => {
+  const pathToCSV = path.resolve(__dirname, '../../artists.csv');
+  const delimiter = ',';
+  const sqlString = `COPY artists(artistId, artistName, avatar, bio) FROM '${pathToCSV}' DELIMITER '${delimiter}' CSV HEADER`;
+  return pgdb.query(sqlString);
+};
+
+const seedPgDatabase2 = () => {
+  const pathToCSV = path.resolve(__dirname, '../../relatedArtists.csv');
+  const delimiter = ',';
+  const sqlString = `COPY relatedArtists(artistId1, artistId2) FROM '${pathToCSV}' DELIMITER '${delimiter}' CSV HEADER`;
+  return pgdb.query(sqlString);
+};
+
+const indexArtistId = () => {
+  const sqlString = 'CREATE INDEX idx_artistId ON artists(artistId)';
+
+  return pgdb.query(sqlString);
+};
+
+const indexArtistId1 = () => {
+  const sqlString = 'CREATE INDEX idx_artistId1 ON relatedArtists(artistId1)';
+
+  return pgdb.query(sqlString);
+};
+
+createArtists()
+  .then(() => console.log('Created table now importing data'))
+  .then(seedPgDatabase1)
+  .then(() => console.log('Imported all records now creating index on artistId'))
+  .then(indexArtistId)
+  .catch(console.log);
+
+createRelatedArtists()
+  .then(() => console.log('Created  second table now importing data'))
+  .then(seedPgDatabase2)
+  .then(() => console.log('Imported all records now creating index on artistId1'))
+  .then(indexArtistId1)
+  .catch(console.log);

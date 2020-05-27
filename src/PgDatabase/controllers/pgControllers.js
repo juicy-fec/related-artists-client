@@ -3,10 +3,27 @@ const model = require('../models/relatedArtists.js');
 module.exports = {
   // get artists by id from db
   getArtistById: (req, res) => {
+    const { artistId } = req.query;
 
+    if (artistId === undefined) {
+      res.status(400).json({
+        message: 'Bad request - must include artistId',
+      });
+    } else {
+      model.getArtistById(artistId)
+        .then((artist) => res.status(200).json({
+          message: 'Successfully retrieved artist',
+          artist: artist.rows,
+        }))
+        .catch((err) => res.status(400).json({
+          message: 'Failed to find artist',
+          error: err,
+        }));
+    }
   },
-  // gets artists by ids in related artists array
-  getArtistsByIds: (req, res) => {
+  // gets artists by ids in related artists table
+  getArtistsByI: (req, res) => {
+
 
   },
 
