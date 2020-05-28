@@ -61,7 +61,7 @@ app.use(express.json());
 
 // app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`));
 
-app.use('/data/rel-Artist', Router);
+app.use('/data/artist', Router);
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

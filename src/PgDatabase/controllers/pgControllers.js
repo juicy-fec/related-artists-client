@@ -6,7 +6,7 @@ let idCounter = 10000001;
 module.exports = {
   // get artists by id from db
   getArtistById: (req, res) => {
-    const { artistId } = req.query;
+    const artistId = req.query.id;
 
     if (artistId === undefined) {
       res.status(400).json({
@@ -14,10 +14,13 @@ module.exports = {
       });
     } else {
       model.getArtistById(artistId)
-        .then((artist) => res.status(200).json({
-          message: 'Successfully retrieved artist',
-          artist: artist.rows,
-        }))
+        .then((artist) => {
+          console.log('artist:', artist.rows);
+          res.status(200).json({
+            message: 'Successfully retrieved artist',
+            artist: artist.rows,
+          });
+        })
         .catch((err) => res.status(400).json({
           message: 'Failed to find artist',
           error: err,
