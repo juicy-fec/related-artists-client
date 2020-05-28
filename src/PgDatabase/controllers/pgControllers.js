@@ -1,4 +1,7 @@
 const model = require('../models/relatedArtists.js');
+const faker = require('faker');
+
+let idCounter = 10000001;
 
 module.exports = {
   // get artists by id from db
@@ -22,18 +25,23 @@ module.exports = {
     }
   },
   // gets artists by ids in related artists table
-  getArtistsByI: (req, res) => {
+  getArtistsById: (req, res) => {
 
 
   },
 
   addNewArtist: (req, res) => {
-    const { artistName, avatar } = req.body;
-    if (artistName !== undefined && avatar !== undefined) {
-      model.addNewArtist(artistName, avatar);
+    let newArtist = { artistName: req.body };
+    newArtist.artistId = idCounter;
+    newArtist = faker.internet.userName();
+    newArtist.bio = 'Artist';
+    newArtist.avatar = faker.image.avatar();
+    if (newArtist !== undefined) {
+      model.addNewArtist(newArtist);
+      idCounter += 1;
     } else {
       res.status(400).json({
-        message: 'Bad request - must include artistName and avatar',
+        message: 'Bad request - must include artistName',
       });
     }
   },

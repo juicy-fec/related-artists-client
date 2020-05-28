@@ -5,7 +5,7 @@ const cors = require('cors');
 const Router = require('../PgDatabase/router/index.js');
 
 // import database connection
-const mongoDb = require('../newDatabase1/connection.js');
+// const mongoDb = require('../newDatabase1/connection.js');
 
 // const { seedMongo, getArtist, dbLogger } = require('../newDatabase1/models/artists');
 
@@ -63,4 +63,5 @@ app.use(express.json());
 
 app.use('/data/rel-Artist', Router);
 
+// eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));

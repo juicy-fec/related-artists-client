@@ -16,7 +16,7 @@ function writeUsers(artiststream, relatedstream, encoding, callback) {
       i -= 1;
       id += 1;
       const artistName = faker.internet.userName();
-      const avatar = faker.image.avatar();
+      const avatar = `faker.image.avatar();`
       const bio = 'Artist';
       const data = `${id},${artistName},${avatar},${bio}\n`;
       if (i === 0) {

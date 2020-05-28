@@ -1,4 +1,4 @@
-import pgdb from '../pgconnection.js';
+import pgdb from '../pgconnection';
 
 
 module.exports = {
@@ -13,10 +13,10 @@ module.exports = {
     return pgdb.query(sqlString, [artistId]);
   },
 
-  addNewArtist: (artistName, avatar) => {
-    const sqlString = 'INSERT INTO Artists(artistId, avatar) VALUES ($1, $2)';
+  addNewArtist: (newArtist) => {
+    const sqlString = 'INSERT INTO Artists(newArtist) VALUES ($1)';
 
-    return pgdb.query(sqlString, [artistName, avatar]);
+    return pgdb.query(sqlString, [newArtist]);
   },
 
   deleteArtistById: (artistId) => {
