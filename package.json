@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "System Data Capstone",
   "scripts": {
+    "artillery": "artillery run hello.yml",
     "seed-db": "node src/PgDatabase/seedPgCsv.js && node src/PgDatabase/seedPg.js",
     "client-dev": "webpack -d --watch",
     "server-dev": "nodemon src/newServer/index.js",
@@ -29,6 +30,7 @@
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "artillery": "^1.6.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",

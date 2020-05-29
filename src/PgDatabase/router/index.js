@@ -3,7 +3,7 @@ const relatedArtistControllers = require('../controllers/pgControllers.js');
 
 router.get('/', relatedArtistControllers.getArtistById);
 
-// router.get('/', relatedArtistControllers.getArtistsById);
+router.get('/related', relatedArtistControllers.getArtistsById);
 
 router.post('/', relatedArtistControllers.addNewArtist);
 

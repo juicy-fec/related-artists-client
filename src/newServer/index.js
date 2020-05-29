@@ -41,9 +41,9 @@ app.use(express.json());
 //   // });
 // });
 
-// app.get('/icon', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../public/playicon.png'));
-// });
+app.get('/icon', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/playicon.png'));
+});
 
 // // post
 // app.post('/rel-artists', (req, res) => {

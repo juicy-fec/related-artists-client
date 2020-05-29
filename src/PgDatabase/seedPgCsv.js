@@ -8,7 +8,7 @@ const writeArtists = fs.createWriteStream('artists.csv');
 writeArtists.write('artistId,artistName,avatar,bio\n', 'utf8');
 
 function writeUsers(artiststream, relatedstream, encoding, callback) {
-  let i = 100;
+  let i = 10000000;
   let id = 0;
   function write() {
     let ok = true;
@@ -16,7 +16,8 @@ function writeUsers(artiststream, relatedstream, encoding, callback) {
       i -= 1;
       id += 1;
       const artistName = faker.internet.userName();
-      const avatar = `faker.image.avatar();`
+      // eslint-disable-next-line quotes
+      const avatar = faker.image.avatar();
       const bio = 'Artist';
       const data = `${id},${artistName},${avatar},${bio}\n`;
       if (i === 0) {

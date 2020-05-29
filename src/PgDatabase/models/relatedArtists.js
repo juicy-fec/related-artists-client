@@ -7,8 +7,17 @@ module.exports = {
 
     return db.query(sqlString, [artistId]);
   },
+
   getArtistsById: (artistId) => {
-    const sqlString = '';
+    const sqlString = `SELECT
+    a.artistname AS main_artist,
+    b.artistname AS related_artist_name, 
+    b.bio AS related_artist_bio, 
+    b.avatar AS related_artist_avatar
+    FROM relatedartists AS ra
+    JOIN artists as a ON ra.artistid1 = a.artistid
+    JOIN artists as b ON ra.artistid2 = b.artistid
+    WHERE a.artistid = $1`;
 
     return db.query(sqlString, [artistId]);
   },

@@ -1,0 +1,15 @@
+config:
+  target: "https://localhost:3030"
+  processor: "./artillery_functions.js"
+  phases:
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 15
+      name: "Warm up the application"
+    - duration: 600
+      arrivalRate: 30
+      name: "Sustained max load"
+    - duration: 600
+      arrivalRate: 10
+      name: "Cool it down"
+

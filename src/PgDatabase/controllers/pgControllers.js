@@ -15,7 +15,6 @@ module.exports = {
     } else {
       model.getArtistById(artistId)
         .then((artist) => {
-          console.log('artist:', artist.rows);
           res.status(200).json({
             message: 'Successfully retrieved artist',
             artist: artist.rows,
@@ -29,6 +28,23 @@ module.exports = {
   },
   // gets artists by ids in related artists table
   getArtistsById: (req, res) => {
+    const artistId = req.query.id;
+
+    if (artistId === undefined) {
+      res.status(400).json({
+        message: 'Bad request - must include artistId',
+      });
+    } else {
+      model.getArtistsById(artistId)
+        .then((data) => res.json({
+          message: 'Success retrieving artists',
+          relatedArtists: data.rows,
+        }))
+        .catch((err) => res.status(400).json({
+          message: 'Failed to find related artists',
+          error: err,
+        }));
+    }
 
 
   },

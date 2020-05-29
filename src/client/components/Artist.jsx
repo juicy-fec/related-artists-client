@@ -64,11 +64,11 @@ class Artist extends React.Component {
     return (
       <div onMouseEnter={this.handlehoverenter} onMouseLeave={this.handlehoverleave}>
         <ImageStyle>
-          <Image src={this.props.artist.avatar} alt="related artist" style={{ opacity: (1 - opacity) }} height="100%" width="100%" />
+          <Image src={this.props.artist.related_artist_avatar} alt="related artist" style={{ opacity: (1 - opacity) }} height="100%" width="100%" />
           <PlayButtonImage src="/icon" alt="play" style={{ opacity }} height="30%" width="30%" />
         </ImageStyle>
         <TextStyle>
-          { this.props.artist.artistName }
+          { this.props.artist.related_artist_name }
         </TextStyle>
       </div>
     );
