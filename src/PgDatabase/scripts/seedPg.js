@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const path = require('path');
-const pgdb = require('./pgconnection.js');
+const pgdb = require('../pgconnection.js');
 
 const createArtists = () => {
   const sqlString = `CREATE TABLE Artists (

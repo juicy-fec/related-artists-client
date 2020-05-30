@@ -6,8 +6,7 @@ let idCounter = 10000001;
 module.exports = {
   // get artists by id from db
   getArtistById: (req, res) => {
-    const artistId = req.query.id;
-
+    const artistId = req.query.artistId;
     if (artistId === undefined) {
       res.status(400).json({
         message: 'Bad request - must include artistId',
@@ -45,8 +44,6 @@ module.exports = {
           error: err,
         }));
     }
-
-
   },
 
   addNewArtist: (req, res) => {

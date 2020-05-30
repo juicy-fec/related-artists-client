@@ -3,7 +3,7 @@ const faker = require('faker');
 // const { Aritst, artistSchema } = require('../models/artists.js');
 
 
-const writeArtists = fs.createWriteStream('artists.csv');
+const writeArtists = fs.createWriteStream('artists_mongo.csv');
 writeArtists.write('artistId,artistName,avatar,bio,related\n', 'utf8');
 
 function writeUsers(writer, encoding, callback) {

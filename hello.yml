@@ -2,13 +2,13 @@ config:
   target: "http://localhost:3030"
   phases:
     - duration: 15
-      arrivalRate: 6
-      name: "Warm up the application"
-    - duration: 15
-      arrivalRate: 10
-      name: "Sustained max load"
-    - duration: 15
       arrivalRate: 5
+      name: "Warm up the application"
+    - duration: 20
+      arrivalRate: 8
+      name: "Sustained max load"
+    - duration: 20
+      arrivalRate: 7
       name: "Cool it down"
   processor: "./artillery_functions.js"
 scenarios: 
@@ -27,4 +27,5 @@ scenarios:
       - function: "getRandomIdTenPercent"
       - get:
           url: "/data/artist?artistId={{ id }}"
-      count: 38
+      count: 52
+
