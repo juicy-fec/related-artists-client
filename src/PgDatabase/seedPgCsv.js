@@ -30,7 +30,7 @@ function writeUsers(artiststream, relatedstream, encoding, callback) {
       const random = Math.ceil(Math.random() * 30);
       for (let j = 0; j < random; j += 1) {
         const artistsId = id;
-        const artistId2 = Math.ceil(Math.random() * 100);
+        const artistId2 = Math.ceil(Math.random() * 10000000);
         const otherData = `${artistsId},${artistId2}\n`;
         relatedstream.write(otherData, encoding, callback);
       }

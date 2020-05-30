@@ -1,8 +1,10 @@
+require('newrelic');
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const Router = require('../PgDatabase/router/index.js');
+
 
 // import database connection
 // const mongoDb = require('../newDatabase1/connection.js');

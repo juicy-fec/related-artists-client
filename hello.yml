@@ -1,31 +1,30 @@
 config:
-  target: "https://localhost:3030"
+  target: "http://localhost:3030"
   phases:
-    - duration: 10
-      arrivalRate: 10
-      rampTo: 15
+    - duration: 15
+      arrivalRate: 6
       name: "Warm up the application"
-    - duration: 20
-      arrivalRate: 30
+    - duration: 15
+      arrivalRate: 10
       name: "Sustained max load"
-    - duration: 20
+    - duration: 15
       arrivalRate: 5
       name: "Cool it down"
   processor: "./artillery_functions.js"
-  scenarios: 
-    -flow: 
-      -get: 
+scenarios: 
+  - flow: 
+    - get: 
         url: "/"
-      -get:
+    - get:
         url: "/bundle.js"
-      -loop:
-      -function: "getRandomIdFirstHalf"
-      -get:
-        -url: "/data/artist?artistId={{ id }}"  
-      -function: "getRandomIdSecondHalf"
-      -get:
-        url: "/data/artist/related?artistId={{ id }}"
-      -function: "getRandomIdTenPercent"
-      -get:
-        url: "/data/artist?artistId={{ id }}"
-      count: 30
+    - loop:
+      - function: "getRandomIdFirstHalf"
+      - get:
+          url: "/data/artist?artistId={{ id }}"  
+      - function: "getRandomIdSecondHalf"
+      - get:
+          url: "/data/artist/?artistId={{ id }}"
+      - function: "getRandomIdTenPercent"
+      - get:
+          url: "/data/artist?artistId={{ id }}"
+      count: 38
