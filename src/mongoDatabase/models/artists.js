@@ -15,16 +15,23 @@ const artistsdbSchema = mongoose.Schema({
 // create model for reviews
 const artists = mongoose.model('artists', artistsdbSchema, 'artists');
 
-module.export = {
+module.exports = {
   // gets numbers of artists
-  getSomeArtists: (num) => artists.find({}).limit(num),
+  getSomeArtists: async (num) => {
+    try {
+      const data = await artists.find().limit(num);
+      return data;
+    }
+    catch (err) {
+      return console.log(err);
+    }
+  },
 
   // tests database call from server
-  dbLogger: () => {
-    artists.findOne({ artistId: 3000 }).explain('executionStats')
-      .then((data) => console.log('dblogger: ', data))
-      .catch((err) => console.log(err));
-  },
+  // dbLogger: () => {
+  //   artists.findOne({ artistId: 3000 }).explain('executionStats')
+  //     .then((data) => console.log('dblogger: ', data))
+  //     .catch((err) => console.log(err));
 
   getArtist: async (id) => {
     try {
@@ -36,18 +43,28 @@ module.export = {
   },
 
   // seeds doc with array of docs and return array of docs to server
-  seedMongo: async (id) => {
+  seedMongo: (id) => {
     // create random number between 3 - 34
     const random = Math.floor(Math.random() * Math.floor(30)) + 4;
+    // grabs single doc based on id from db
+    // const document = artists.findOne({ artistId: id });
     // grabs group of artists from db based on random number
-    const someArtists = this.getSomeArtists(random);
+    const someArtists = module.exports.getSomeArtists(random);
     // run save on document updating related artists
-    const [artistArr] = await Promise.all([someArtists]);
-    const newdoc = artists.findOneAndUpdate({ artistId: id }, { relatedArtists: artistArr },
-      // If `new` isn't true, `findOneAndUpdate()` will return the
-      // document as it was _before_ it was updated.
-      { new: true });
-    // console.log('artists ', artistArr);
-    return newdoc;
+    // console.log('artists:', someArtists);
+    return Promise.all([someArtists])
+      .then(([artistArr]) => {
+        const newdoc = artists.findOneAndUpdate(
+          { artistId: id },
+          { relatedArtists: artistArr },
+          // { useFindAndModify: false },
+          // If `new` isn't true, `findOneAndUpdate()` will return the
+          // document as it was _before_ it was updated.
+          { new: true },
+        );
+        // console.log('artists ', artistArr);
+        return newdoc;
+      });
   },
+
 };

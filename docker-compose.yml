@@ -3,9 +3,9 @@ services:
   relatedartists:
     build: .
     depends_on:
-      - 'database'
+      - 'PGDatabase'
     ports:
-      - '3100:3100'
+      - '3030:3030'
 
   database:
     image: mongo:latest

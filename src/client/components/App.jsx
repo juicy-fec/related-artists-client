@@ -72,7 +72,7 @@ class App extends React.Component {
       // console.log(data.relatedArtists[0]);
       let param = {};
       if (data !== null) {
-        param = data.artist[0];
+        param = data.artist;
       }
       this.setState({ artistinfo: param });
     });
@@ -80,7 +80,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log('state in app', this.state);
     let component;
     if (Object.keys(this.state.artistinfo).length === 0) {
       component = <div>empty</div>;

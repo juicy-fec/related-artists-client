@@ -4,10 +4,12 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const Router = require('../PgDatabase/router/index.js');
-// const mRouter = require('../mongoDatabase/router');
+
+// change router to use mongoDb
+// const Router = require('../mongoDatabase/router/index.js');
 
 // import database connection
-const mongoDb = require('../mongoDatabase/connection.js');
+// const mongoDb = require('../mongoDatabase/connection.js');
 
 
 const app = express();

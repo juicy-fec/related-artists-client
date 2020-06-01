@@ -5,6 +5,8 @@ router.get('/', relatedArtistControllers.getArtistById);
 
 router.get('/related', relatedArtistControllers.getArtistsById);
 
+router.get('/icon', relatedArtistControllers.getImage);
+
 router.post('/', relatedArtistControllers.addNewArtist);
 
 router.delete('/', relatedArtistControllers.deleteArtistById);

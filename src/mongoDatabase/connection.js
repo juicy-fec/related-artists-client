@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost/artistsdb', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/artistsdb', { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false });
 
 const mongoDb = mongoose.connection;
 
