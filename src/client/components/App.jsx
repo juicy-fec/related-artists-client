@@ -5,20 +5,20 @@ import ArtistList from './ArtistList.jsx';
 import ArtistMenu from './ArtistMenu.jsx';
 
 
-// const widthandheight = (windowsize) => {
-//   let size;
-//   const { width } = windowsize;
-//   if (width < 767) {
-//     size = { width: '33%', height: '33%' };
-//   } else if (width >= 767 && width < 996) {
-//     size = { width: '25%', height: '25%' };
-//   } else if (width >= 996 && width < 1200) {
-//     size = { width: '16%', height: '16%' };
-//   } else {
-//     size = { width: '10%', height: '10%' };
-//   }
-//   return size;
-// };
+const widthandheight = (windowsize) => {
+  let size;
+  const { width } = windowsize;
+  if (width < 767) {
+    size = { width: '33%', height: '33%' };
+  } else if (width >= 767 && width < 996) {
+    size = { width: '25%', height: '25%' };
+  } else if (width >= 996 && width < 1200) {
+    size = { width: '16%', height: '16%' };
+  } else {
+    size = { width: '10%', height: '10%' };
+  }
+  return size;
+};
 
 const AppStyle = styled.div`
   min-height: 100%;
@@ -66,13 +66,13 @@ class App extends React.Component {
 
   fetchArtistData() {
     // need to find an initial artist.
-    fetch(`/data/artist?id=${this.state.artistid}`).then((response) => {
+    fetch(`/data/artist?artistId=${this.state.artistid}`).then((response) => {
       return response.json();
     }).then((data) => {
       // console.log(data.relatedArtists[0]);
       let param = {};
       if (data !== null) {
-        param = data.relatedArtists[0];
+        param = data.artist;
       }
       this.setState({ artistinfo: param });
     });

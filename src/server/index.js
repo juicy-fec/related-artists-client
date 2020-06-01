@@ -1,33 +1,29 @@
-// const cors = require('cors');
-// const express = require('express');
-// const path = require('path');
-// const db = require('../database/schema');
+require('newrelic');
+const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
+const cors = require('cors');
+const Router = require('../PgDatabase/router/index.js');
+
+// change router to use mongoDb
+// const Router = require('../mongoDatabase/router/index.js');
+
+// import database connection
+// const mongoDb = require('../mongoDatabase/connection.js');
 
 
-// const app = express();
-// const port = 3100;
+const app = express();
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-// app.use(cors());
-// app.use(express.static(path.join(__dirname, '/../../public')));
-// app.use(express.json());
+const PORT = process.env.PORT || 3030;
 
+app.use(express.static(path.join(__dirname, '/../../public')));
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.json());
 
-// app.get('/artists', (req, res) => {
-//   db.getdata().then((data) => {
-//     res.json(data);
-//   }).catch(() => {
-//     res.json({ err: 'cant access database' });
-//   });
-// });
+// app.listen(PORT, () => console.log(`Example app listening at http://localhost:${PORT}`));
 
-// app.get('/data/artist/', (req, res) => {
-//   const userid = req.query.id;
-//   db.getArtist(userid).then((data) => {
-//     res.json(data);
-//   });
-// });
+app.use('/data/artist', Router);
 
-// app.get('/icon', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../public/playicon.png'));
-// });
+// eslint-disable-next-line no-console
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));

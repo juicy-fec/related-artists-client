@@ -24,4 +24,6 @@ coverage
 build/
 dist/
 
-artists.csv
+newrelic.js
+
+.csv

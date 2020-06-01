@@ -4,7 +4,7 @@ import Artist from './Artist.jsx';
 
 
 const getRelatedArtist = (id) => {
-  return fetch(`/data/artist?id=${id}`).then((response) => {
+  return fetch(`/data/artist/related?artistId=${id}`).then((response) => {
     return response.json();
   });
 };
@@ -24,7 +24,7 @@ class ArtistList extends React.Component {
     // const newstate = [];
 
     getRelatedArtist(1)
-      .then((data) => this.setState({ artists: data.relatedArtists }))
+      .then((data) => this.setState({ artists: data.artists }))
       .catch((err) => console.log(err));
 
     // this.props.artist.relatedArtists.forEach((relatedartist) => {

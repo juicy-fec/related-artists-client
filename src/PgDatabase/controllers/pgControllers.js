@@ -1,24 +1,69 @@
+const faker = require('faker');
+const path = require('path');
 const model = require('../models/relatedArtists.js');
+
+let idCounter = 10000001;
 
 module.exports = {
   // get artists by id from db
   getArtistById: (req, res) => {
-
+    const { artistId } = req.query;
+    if (artistId === undefined) {
+      res.status(400).json({
+        message: 'Bad request - must include artistId',
+      });
+    } else {
+      model.getArtistById(artistId)
+        .then((artist) => {
+          res.status(200).json({
+            message: 'Successfully retrieved artist',
+            artist: artist.rows,
+          });
+        })
+        .catch((err) => res.status(400).json({
+          message: 'Failed to find artist',
+          error: err,
+        }));
+    }
   },
-  // gets artists by ids in related artists array
-  getArtistsByIds: (req, res) => {
-
+  // gets artists by ids in related artists table
+  getArtistsById: (req, res) => {
+    const { artistId } = req.query;
+    if (artistId === undefined) {
+      res.status(400).json({
+        message: 'Bad request - must include artistId',
+      });
+    } else {
+      model.getArtistsById(artistId)
+        .then((data) => res.json({
+          message: 'Success retrieving artists',
+          artists: data.rows,
+        }))
+        .catch((err) => res.status(400).json({
+          message: 'Failed to find related artists',
+          error: err,
+        }));
+    }
   },
 
   addNewArtist: (req, res) => {
-    const { artistName, avatar } = req.body;
-    if (artistName !== undefined && avatar !== undefined) {
-      model.addNewArtist(artistName, avatar);
+    let newArtist = { artistName: req.body };
+    newArtist.artistId = idCounter;
+    newArtist = faker.internet.userName();
+    newArtist.bio = 'Artist';
+    newArtist.avatar = faker.image.avatar();
+    if (newArtist !== undefined) {
+      model.addNewArtist(newArtist);
+      idCounter += 1;
     } else {
       res.status(400).json({
-        message: 'Bad request - must include artistName and avatar',
+        message: 'Bad request - must include artistName',
       });
     }
+  },
+
+  getImage: (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/playicon.png'));
   },
 
   deleteArtistById: (req, res) => {

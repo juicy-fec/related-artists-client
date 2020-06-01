@@ -1,29 +1,43 @@
-import pgdb from '../pgconnection.js';
+const db = require('../pgconnection.js');
 
 
 module.exports = {
   getArtistById: (artistId) => {
-    const sqlString = 'SELECT * FROM rel-artists WHERE artist_id = $1';
+    const sqlString = 'SELECT * FROM Artists WHERE artistId = $1';
 
-    return pgdb.query(sqlString, [artistId]);
+    return db.query(sqlString, [artistId]);
   },
 
-  addNewArtist: (artistName, avatar) => {
-    const sqlString = 'INSERT INTO rel-artists(artist_id, avatar) VALUES ($1, $2)';
+  getArtistsById: (artistId) => {
+    const sqlString = `SELECT
+    a.artistname AS main_artist,
+    b.artistname AS related_artist_name, 
+    b.bio AS related_artist_bio, 
+    b.avatar AS related_artist_avatar
+    FROM relatedartists AS ra
+    JOIN artists as a ON ra.artistid1 = a.artistid
+    JOIN artists as b ON ra.artistid2 = b.artistid
+    WHERE a.artistid = $1`;
 
-    return pgdb.query(sqlString, [artistName, avatar]);
+    return db.query(sqlString, [artistId]);
+  },
+
+  addNewArtist: (newArtist) => {
+    const sqlString = 'INSERT INTO Artists(newArtist) VALUES ($1)';
+
+    return db.query(sqlString, [newArtist]);
   },
 
   deleteArtistById: (artistId) => {
-    const sqlString = 'DELETE FROM rel-artists WHERE artist_id = $1';
+    const sqlString = 'DELETE FROM Artists WHERE artistId = $1';
 
-    return pgdb.query(sqlString, [artistId]);
+    return db.query(sqlString, [artistId]);
   },
 
   updateArtistById: ({ artistId, artistName, avatar }) => {
-    const sqlString = 'UPDATE rel-artists SET artist_name = $2, avatar = $3 WHERE artist_id = $1';
+    const sqlString = 'UPDATE Artists SET artistName = $2, avatar = $3 WHERE artistId = $1';
 
-    return pgdb.query(sqlString, [artistId, artistName, avatar]);
+    return db.query(sqlString, [artistId, artistName, avatar]);
   },
 
 
