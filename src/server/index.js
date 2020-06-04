@@ -1,11 +1,12 @@
-
-require('newrelic');
+// eslint-disable-next-line import/order
+const config = require('../../config');
+// require('newrelic');
 
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
-const config = require('../../config');
+
 const Router = require('../PgDatabase/router/index.js');
 
 // change router to use mongoDb

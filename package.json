@@ -4,10 +4,10 @@
   "description": "System Data Capstone",
   "scripts": {
     "build": "webpack -p",
-    "start": "node server/index.js",
+    "start": "node src/server/index.js",
     "artillery": "artillery run hello.yml",
     "seed-pg-csv": "node src/PgDatabase/scripts/seedPgCsv.js && node src/PgDatabase/scripts/seedPgRelated.js ",
-    "seed-pg": "node src/PgDatabase/seedPg.js",
+    "seed-pg": "node src/PgDatabase/scripts/seedPg.js",
     "seed-mongo-db": "node src/mongoDatabase/scripts/seedMongo.js && mongoimport -d artistsdb -c artists --type csv --file artists.csv --headerline",
     "client-dev": "webpack -d --watch",
     "server-dev": "nodemon src/server/index.js",

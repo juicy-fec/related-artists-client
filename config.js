@@ -9,7 +9,7 @@ const dev = {
   db: {
     host: process.env.DEV_DB_HOST || 'localhost',
     port: parseInt(process.env.DEV_DB_PORT, 10) || 5432,
-    database: process.env.DEV_DB_NAME || 'relatedartists',
+    database: process.env.DEV_DB_NAME || 'related-artists',
     user: process.env.USER,
     password: null,
   },
@@ -21,7 +21,7 @@ const dev = {
 
 const prod = {
   app: {
-    port: parseInt(process.env.PROD_APP_PORT, 10) || 8020,
+    port: parseInt(process.env.PROD_APP_PORT, 10) || 3000,
   },
   db: {
     host: process.env.PROD_DB_HOST || 'database',

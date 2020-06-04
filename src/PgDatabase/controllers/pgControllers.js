@@ -70,15 +70,56 @@ module.exports = {
     // },
     }
   },
+  // with redis
+  // getRelatedArtists: (req, res) => {
+  //   const { artistId } = req.query;
+
+  //   if (artistId === undefined) {
+  //     res.status(400).json({
+  //       message: 'Bad request - must include artistId',
+  //     });
+  //   } else {
+  //     let modelFunction = '';
+  //     let param = '';
+  //     let cacheKey = '';
+  //     if (artistId !== undefined) {
+  //       modelFunction = model.getRelatedArtists;
+  //       param = artistId;
+  //       cacheKey = `artistId=${artistId}`;
+  //     }
+
+  //     // With Cache
+  //     cache.retrieveFromCache(cacheKey)
+  //       .then((results) => {
+  //         if (results) {
+  //           res.status(200).json(results);
+  //         } else {
+  //           modelFunction(param)
+  //             .then((artist) => {
+  //               const messageObj = {
+  //                 message: 'Successfully retrieved artist',
+  //                 artist: artist.rows,
+  //               };
+  //               res.status(200).json(messageObj);
+  //               return messageObj;
+  //             })
+  //             .then((value) => cache.addToCache(cacheKey, value))
+  //             .catch((err) => res.status(400).json({
+  //               message: 'Failed to find artist',
+  //               error: err,
+  //             }));
+  //         }
+  //       });
+  //   }
   // gets artists by ids in related artists table
-  getArtistsById: (req, res) => {
+  getRelatedArtists: (req, res) => {
     const { artistId } = req.query;
     if (artistId === undefined) {
       res.status(400).json({
         message: 'Bad request - must include artistId',
       });
     } else {
-      model.getArtistsById(artistId)
+      model.getRelatedArtists(artistId)
         .then((data) => res.json({
           message: 'Success retrieving artists',
           artists: data.rows,
