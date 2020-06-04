@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/order
 const config = require('../../config');
-// require('newrelic');
+require('newrelic');
 
 const express = require('express');
 const morgan = require('morgan');
