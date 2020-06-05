@@ -85,7 +85,7 @@ module.exports = {
       if (artistId !== undefined) {
         modelFunction = model.getRelatedArtists;
         param = artistId;
-        cacheKey = `artistId=${artistId}`;
+        cacheKey = `rel-artistId=${artistId}`;
       }
 
       // With Cache

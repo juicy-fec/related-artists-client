@@ -12,7 +12,7 @@ services:
       - PGUSER
       - PG_AWS_PASSWORD
       - PGDATABASE
-      - NEW_RELIC_API_KEY
+      - NEW_RELIC
       - PROD_DB_HOST
   cache:
     image: redis
